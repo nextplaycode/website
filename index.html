@@ -7,93 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --turf: #0a1a0a;
-      --turf-light: #0f2810;
-      --chalk: #f0efe8;
-      --chalk-dim: #b8b5a8;
-      --lime: #4ade80;
-      --lime-glow: #22c55e;
-      --amber: #fbbf24;
-      --sky: #38bdf8;
-      --whistle: #ef4444;
-      --surface: #111c11;
-      --surface-raised: #162416;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Inter', -apple-system, sans-serif;
-      color: var(--chalk);
-      line-height: 1.6;
-      background: var(--turf);
-      overflow-x: hidden;
-    }
-
-    /* ═══ NAV ═══ */
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 100;
-      padding: 0 2rem;
-      background: rgba(10, 26, 10, 0.85);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(74, 222, 128, 0.1);
-    }
-    .nav-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 68px;
-    }
-    .logo {
-      font-family: 'Space Mono', monospace;
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--chalk);
-      text-decoration: none;
-      letter-spacing: -1px;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .logo-arrow {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      background: var(--lime);
-      color: var(--turf);
-      border-radius: 6px;
-      font-size: 1.1rem;
-      font-weight: 900;
-    }
-    .nav-links { display: flex; align-items: center; gap: 0.25rem; }
-    nav a.nav-link {
-      color: var(--chalk-dim);
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 500;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      transition: all 0.2s;
-    }
-    nav a.nav-link:hover {
-      color: var(--lime);
-      background: rgba(74, 222, 128, 0.08);
-    }
-
-    /* ═══ HERO ═══ */
+  <link rel="stylesheet" href="assets/site.css">
+  <style>/* ═══ HERO ═══ */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -210,37 +125,6 @@
     }
     .hero-cta svg { width: 18px; height: 18px; }
 
-    /* ═══ SECTIONS ═══ */
-    section { padding: 6rem 2rem; }
-    .container { max-width: 1100px; margin: 0 auto; }
-
-    .section-header {
-      margin-bottom: 3.5rem;
-    }
-    .section-number {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--lime);
-      letter-spacing: 2px;
-      margin-bottom: 0.75rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .section-number::after {
-      content: '';
-      height: 1px;
-      width: 60px;
-      background: linear-gradient(90deg, var(--lime), transparent);
-    }
-    .section-title {
-      font-size: clamp(1.8rem, 4vw, 2.5rem);
-      font-weight: 800;
-      letter-spacing: -1px;
-      line-height: 1.15;
-    }
-
     /* ═══ ABOUT ═══ */
     .about {
       background: var(--surface);
@@ -313,9 +197,11 @@
     .projects {
       background: var(--turf);
     }
+    /* Two across rather than three: with four cards, three columns strands the
+       last one alone on its own row. */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
       gap: 1.5rem;
     }
     .project-card {
@@ -327,6 +213,13 @@
       overflow: hidden;
       transition: all 0.3s;
     }
+    /* One accent per card, chosen by a class rather than by nth-child, so
+       adding a card is a one-word change instead of a re-colouring of its
+       neighbours. */
+    .project-card { --card-accent: var(--lime); }
+    .project-card.sky { --card-accent: var(--sky); }
+    .project-card.amber { --card-accent: var(--amber); }
+    .project-card.violet { --card-accent: var(--violet); }
     .project-card::before {
       content: '';
       position: absolute;
@@ -334,10 +227,8 @@
       left: 0;
       right: 0;
       height: 3px;
+      background: var(--card-accent);
     }
-    .project-card:nth-child(1)::before { background: var(--lime); }
-    .project-card:nth-child(2)::before { background: var(--sky); }
-    .project-card:nth-child(3)::before { background: var(--amber); }
 
     .project-card:hover {
       border-color: rgba(74,222,128,0.25);
@@ -355,11 +246,8 @@
       font-family: 'Space Mono', monospace;
       font-size: 1.3rem;
       font-weight: 700;
-      color: var(--chalk);
+      color: var(--card-accent);
     }
-    .project-card:nth-child(1) .project-name { color: var(--lime); }
-    .project-card:nth-child(2) .project-name { color: var(--sky); }
-    .project-card:nth-child(3) .project-name { color: var(--amber); }
 
     .project-status {
       font-family: 'Space Mono', monospace;
@@ -394,6 +282,24 @@
       flex-wrap: wrap;
       gap: 0.4rem;
     }
+    .project-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(240,239,232,0.06);
+    }
+    .project-links a {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      color: var(--card-accent);
+      text-decoration: none;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+    .project-links a:hover { opacity: 1; text-decoration: underline; }
+
     .tag {
       font-size: 0.7rem;
       font-weight: 600;
@@ -474,31 +380,7 @@
       line-height: 1.75;
     }
 
-    /* ═══ FOOTER ═══ */
-    footer {
-      text-align: center;
-      padding: 3rem 2rem;
-      background: var(--turf);
-      border-top: 1px solid rgba(74,222,128,0.06);
-    }
-    .footer-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .footer-copy {
-      color: rgba(240,239,232,0.3);
-      font-size: 0.8rem;
-    }
-    .footer-mark {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.75rem;
-      color: rgba(74,222,128,0.3);
-      letter-spacing: 2px;
-    }
-
+    
     /* ═══ RESPONSIVE ═══ */
     @media (max-width: 768px) {
       .about-grid,
@@ -508,9 +390,7 @@
       }
       .playbook-visual { display: none; }
       .hero h1 { letter-spacing: -2px; }
-      section { padding: 4rem 1.5rem; }
       .projects-grid { grid-template-columns: 1fr; }
-      .footer-inner { flex-direction: column; gap: 0.5rem; }
     }
   </style>
 </head>
@@ -615,7 +495,7 @@
           </div>
         </div>
 
-        <div class="project-card">
+        <div class="project-card sky">
           <div class="project-meta">
             <span class="project-name">LeagueCaddie</span>
             <span class="project-status status-later">Late 2026</span>
@@ -628,7 +508,7 @@
           </div>
         </div>
 
-        <div class="project-card">
+        <div class="project-card amber">
           <div class="project-meta">
             <span class="project-name">Sitrep</span>
             <span class="project-status status-soon">Early 2026</span>
@@ -638,6 +518,23 @@
             <span class="tag">Fitness</span>
             <span class="tag">Challenges</span>
             <span class="tag">Goals</span>
+          </div>
+        </div>
+
+
+        <div class="project-card violet">
+          <div class="project-meta">
+            <span class="project-name">WeDo Blocks</span>
+            <span class="project-status status-soon">Coming Soon</span>
+          </div>
+          <p class="project-desc">Block coding for LEGO&reg; WeDo 2.0 robotics kits. Built for classrooms after the original app was discontinued &mdash; connect a hub over Bluetooth and start building programs.</p>
+          <div class="project-tags">
+            <span class="tag">Education</span>
+            <span class="tag">Robotics</span>
+            <span class="tag">Block Coding</span>
+          </div>
+          <div class="project-links">
+            <a href="apps/wedo-blocks/privacy-policy/">Privacy Policy</a>
           </div>
         </div>
 
